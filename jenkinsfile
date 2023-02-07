@@ -1,10 +1,6 @@
 def registry = 'https://valaxy02.jfrog.io'
 pipeline{
-    agent {
-        node {
-            label "valaxy"
-        }
-    }
+    agent any
     environment {
         PATH = "/opt/apache-maven-3.8.7/bin:$PATH"
     }
