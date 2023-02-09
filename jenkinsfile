@@ -20,7 +20,7 @@ pipeline{
         
                 }
             }
-            stage ("sonar analysis") {
+            stage ('sonar analysis') {
                 environment {
                     scannerHome = tool 'sonar scanner'
                 }
@@ -29,19 +29,18 @@ pipeline{
                         sh "${scannerHome}/bin/sonar-scanner"
                     }
                 }
-                stage ("quality check"){
+            }
+                stage ('quality check') {
                     steps{
                         script{
-                            timeout (time: 1, unit: 'HOURS'){
+                            timeout (time: 1, unit: 'HOURS') {
                                 def qg = waitForQualityGate()
-                                if(qg.status !='OK'){
-                                    error "Pipeline failed due to quality failure: ${qg.status}"
-                                }
+                                if(qg.status !='OK') {
+                                error "Pipeline failed due to quality failure: ${qg.status}"
                             }
                         }
                     }
                 }
-
             }
         }
     }
