@@ -7,19 +7,26 @@ pipeline{
     environment {
         PATH = "/opt/apache-maven-3.9.0/bin:$PATH"
     }
-    
-    stages {
-        Stage('build') {
-            steps{
-                sh "mvn clean deploy"
-            }
-        }
+    stages
         stage ("scm checkout") {
             steps{
                 echo "---scm started-----"
                 git branch: 'main', credentialsId: '07c0414c-745c-4dfc-aae5-089fb824fc4d', url: 'https://github.com/sdimran7387/twitter.git'
                 echo "----scm completed"
 
+            }
+        }
+        stage (build) {
+        steps{
+            echo "-----build started-----"
+            sh 'mvn clean install'
+            echo "-----build completed-----"
+        
+        }
+
+        Stage('build') {
+            steps{
+                sh "mvn clean deploy"
             }
         }
 
