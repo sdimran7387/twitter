@@ -1,11 +1,19 @@
 pipeline{
     agent {
         node {
-            label "slave"
+            label "build"
         }
     }
+    environment {
+        PATH = "/opt/apache-maven-3.9.0/bin:$PATH"
+    }
     
-    stages 
+    stages {
+        Stage('build') {
+            steps{
+                sh "mvn clean deploy"
+            }
+        }
         stage ("scm checkout") {
             steps{
                 echo "---scm started-----"
