@@ -10,7 +10,7 @@ pipeline{
             steps{
                 echo "---scm started-----"
                 git branch: 'main', credentialsId: '07c0414c-745c-4dfc-aae5-089fb824fc4d', url: 'https://github.com/sdimran7387/twitter.git'
-                echo "----scm completedgit branch: 'main', credentialsId: '07c0414c-745c-4dfc-aae5-089fb824fc4d', url: 'https://github.com/sdimran7387/twitter.git'"
+                echo "----scm completed"
 
             }
         }
