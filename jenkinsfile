@@ -4,34 +4,20 @@ pipeline{
             label "build"
         }
     }
-    environment {
-        PATH = "/opt/apache-maven-3.9.0/bin:$PATH"
-    }
-    stages {
-        stage ("scm checkout") {
-            steps{
-                echo "---scm started-----"
-                git branch: 'main', credentialsId: '07c0414c-745c-4dfc-aae5-089fb824fc4d', url: 'https://github.com/sdimran7387/twitter.git'
-                echo "----scm completed"
-    }
-
+        environment {
+            PATH = "/opt/apache-maven-3.9.0/bin:$PATH"
+        }
+        stages {
+            stage ("scm checkout") {
+                steps{
+                    git branch: 'main', credentialsId: '07c0414c-745c-4dfc-aae5-089fb824fc4d', url: 'https://github.com/sdimran7387/twitter.git'
+                }
             }
-
-        stage (build) {
-        steps{
-            echo "-----build started-----"
-            sh 'mvn clean install'
-            echo "-----build completed-----"
+            stage (build) {
+                steps{
+                    sh 'mvn clean install'
         
-        }
-        }
-        Stage('build') {
-            steps{
-                sh "mvn clean deploy"
+                }
             }
         }
-
-            
-        
-    }
     }
