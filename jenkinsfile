@@ -47,13 +47,13 @@ pipeline{
         steps {
             script {
                     echo '<--------------- Jar Publish Started --------------->'
-                     def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"74b13df6-f554-4210-a095-00be79c3e6a2"
+                     def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"jfrogforjenkins"
                      def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
                      def uploadSpec = """{
                           "files": [
                             {
                               "pattern": "jarstaging/(*)",
-                              "target": "latest-libs-release-local/{1}",
+                              "target": "twitter-libs-release-local/{1}",
                               "flat": "false",
                               "props" : "${properties}",
                               "exclusions": [ "*.sha1", "*.md5"]
