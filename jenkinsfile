@@ -13,7 +13,7 @@ pipeline{
         stages {
             stage ("scm checkout") {
                 steps{
-                    git branch: git branch: 'main', credentialsId: 'git-credentials', url: 'https://github.com/sdimran7387/twitter.git'
+                    git branch: 'main', credentialsId: 'git-credentials', url: 'https://github.com/sdimran7387/twitter.git'
                 }
             }
             stage (build) {
