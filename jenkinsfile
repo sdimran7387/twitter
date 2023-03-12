@@ -1,10 +1,10 @@
 def registry = 'https://imransd.jfrog.io/'
- def imageName = 'imransd.jfrog.io/new-docker-docker/ttrend'
+ def imageName = 'imransd.jfrog.io/valaxy-docker/ttrend'
 	   def version   = '2.0.2'
 pipeline{
     agent {
         node {
-            label "build"
+            label "newbuild"
         }
     }
         environment {
@@ -13,7 +13,7 @@ pipeline{
         stages {
             stage ("scm checkout") {
                 steps{
-                    git branch: 'main', credentialsId: '07c0414c-745c-4dfc-aae5-089fb824fc4d', url: 'https://github.com/sdimran7387/twitter.git'
+                    git branch: git branch: 'main', credentialsId: 'git-credentials', url: 'https://github.com/sdimran7387/twitter.git'
                 }
             }
             stage (build) {
@@ -55,7 +55,7 @@ pipeline{
                           "files": [
                             {
                               "pattern": "jarstaging/(*)",
-                              "target": "taxi-libs-release-local/{1}",
+                              "target": "twitter-libs-release-local/{1}",
                               "flat": "false",
                               "props" : "${properties}",
                               "exclusions": [ "*.sha1", "*.md5"]
@@ -71,26 +71,27 @@ pipeline{
                 }   
             }
                 stage(" Docker Build ") {
-          steps {
-            script {
-               echo '<--------------- Docker Build Started --------------->'
-               app = docker.build(imageName+":"+version)
-               echo '<--------------- Docker Build Ends --------------->'
-            }
-          }
+      steps {
+        script {
+           echo '<--------------- Docker Build Started --------------->'
+           app = docker.build(imageName+":"+version)
+           echo '<--------------- Docker Build Ends --------------->'
         }
+      }
+    }
 
-                stage (" Docker Publish "){
-            steps {
-                script {
-                   echo '<--------------- Docker Publish Started --------------->'  
-                    docker.withRegistry(registry, 'jfrogforjenkins'){
-                        app.push()
-                    }    
-                   echo '<--------------- Docker Publish Ended --------------->'  
-                }
+    stage (" Docker Publish "){
+        steps {
+            script {
+               echo '<--------------- Docker Publish Started --------------->'  
+                docker.withRegistry(registry, 'jfrog-access'){
+                    app.push()
+                }    
+               echo '<--------------- Docker Publish Ended --------------->'  
+            }
+        }
+    }
+                  
 
         }
     }
-        }
-}
