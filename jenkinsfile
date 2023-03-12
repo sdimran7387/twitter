@@ -4,7 +4,7 @@ def registry = 'https://imransd.jfrog.io/'
 pipeline{
     agent {
         node {
-            label "newbuild"
+            label "slave"
         }
     }
         environment {
