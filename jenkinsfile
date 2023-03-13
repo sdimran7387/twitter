@@ -1,5 +1,5 @@
-def registry = 'https://imransd.jfrog.io/'
- def imageName = 'imransd.jfrog.io/new-docker-docker/ttrend'
+def registry = 'https://imran37.jfrog.io/'
+ def imageName = 'imransd.jfrog.io/doc-twitt-docker/ttrend'
 	   def version   = '2.0.2'
 pipeline{
     agent {
@@ -50,7 +50,7 @@ pipeline{
         steps {
             script {
                     echo '<--------------- Jar Publish Started --------------->'
-                     def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"jfrogforjenkins"
+                     def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"jfrog-credentials"
                      def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
                      def uploadSpec = """{
                           "files": [
@@ -85,7 +85,7 @@ pipeline{
         steps {
             script {
                echo '<--------------- Docker Publish Started --------------->'  
-                docker.withRegistry(registry, 'jfrog-access'){
+                docker.withRegistry(registry, 'jfrog-credentials'){
                     app.push()
                 }    
                echo '<--------------- Docker Publish Ended --------------->'  
